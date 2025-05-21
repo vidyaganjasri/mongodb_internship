@@ -93,11 +93,17 @@ A **project** in Atlas helps organize related clusters, databases, and access se
 - Click any collection to view documents in **JSON format**
 - Use the **filter bar** to run custom queries and explore specific data
 
----
+---Suppose you have a collection of documents with user names, and you want to find data related only to a specific name, like **Tyler**.
+
+You can perform a query like this:
+
+```json
+{ "name": "Tyler" }
+```
 
 ## 📷 Screenshots (Optional)
 
-You can add screenshots here using Markdown like:
 
-![image](https://github.com/user-attachments/assets/8fca114f-1a3f-436b-a894-bddbd097c67d)
+![image](https://github.com/user-attachments/assets/c9f85089-a358-4bfb-a926-b6acd1eac30c)
+
 
