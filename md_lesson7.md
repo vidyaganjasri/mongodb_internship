@@ -1,51 +1,136 @@
-How to insert doc into collectio 
-1.insert one 
+## 📥 1. Inserting Documents into a Collection
 
-db.<collection>.insertOne()
-db.grades.insertOne()
-grades is a collection 
-if doesn't exist it automatically creates one 
+### 🔹 Insert One Document
 
-2.insert many 
+```js
+db.<collection>.insertOne(<document>)
+```
+✅ Example:
+
+```js
+db.grades.insertOne({
+  student_id: 1001,
+  grade: "A",
+  subject: "Math"
+})
+```
+If the grades collection doesn’t exist, MongoDB will automatically create it.
+
+🔹 Insert Multiple Documents
+```js
 
 db.<collection>.insertMany([
-<doc 1>,
-<doc 2>,
-<doc 3>
+  <document1>,
+  <document2>,
+  <document3>
 ])
+```
+✅ Example:
 
+```js
 
-2. Finding documents in a mongoDB collection
-find()
-db.<collections>.find()
+db.students.insertMany([
+  { name: "Alice", age: 21 },
+  { name: "Bob", age: 22 },
+  { name: "Charlie", age: 20 }
+])
+```
+🔎 2. Finding Documents
+🔹 Find All Documents
+```js
+
+db.<collection>.find()
+```
+```js
 
 db.zips.find()
+```
+🔹 Find Specific Document(s)
+➤ Equality Match
+```js
 
-it for more docs
+db.zips.find({ state: "AZ" })
+```
+➤ $in Operator
+```js
 
-to retrieve specific doc in collection 
-: eq
+db.zips.find({ city: { $in: ["PHOENIX", "CHICAGO"] } })
+```
+⚖️ 3. Comparison Operators
+Operator	Meaning
 
-specific syntax 
+$gt	Greater than
+$lt	Less than
+$gte	Greater than or equal
+$lte	Less than or equal
 
+🔹 Syntax
+```js
 
-db.zips.find({state:"AZ"})
+<field>: { <operator>: <value> }
+```
+✅ Example:
 
-db.<collections>.find({city:{$in:["PHOENIX","HICAGO"]}})
+```js
 
+db.sales.find({ "items.price": { $gt: 50 } })
+```
+📚 4. Querying Array Elements
+🔹 $elemMatch for Arrays
+```js
 
-#Comparision operators 
-$gt - greater then 
-$lt - less then 
-$lte - less then equal 
-$gte - greater then equal 
+db.accounts.find({
+  products: {
+    $elemMatch: { $eq: "InvestmentStock" }
+  }
+})
+```
+Ensures products is an array containing "InvestmentStock".
 
-<field> : { <operator> : <value> }
+⚙️ 5. Logical Operators
+🔹 $and Operator
+```js
 
+db.users.find({
+  $and: [
+    { age: { $gte: 18 } },
+    { status: "active" }
+  ]
+})
+```
+Or simply:
 
-$gt: 
-returns doc where the field greather then the specified value 
-ex: db.sales.find({ "items.price": { $gt: 50}})
-similarly lt,gte and lte
+```js
 
+db.users.find({ age: { $gte: 18 }, status: "active" })
+```
+🔹 $or Operator
+```js
+db.users.find({
+  $or: [
+    { age: { $lt: 18 } },
+    { status: "inactive" }
+  ]
+})
+```
+⚠️ Rule for Repeating Operators
+✅ Valid:
+
+```js
+
+db.collection.find({
+  $and: [
+    { $or: [...] },
+    { $or: [...] }
+  ]
+})
+```
+❌ Invalid:
+
+```js
+db.collection.find({
+  $or: [...],
+  $or: [...]
+})
+```
 
